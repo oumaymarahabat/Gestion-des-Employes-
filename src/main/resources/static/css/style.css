@@ -1,0 +1,45 @@
+/* style.css */
+.navbar {
+    height: 50px; /* ou la hauteur de votre navbar */
+}
+.navbar-custom {
+     background-color: #004080; /* Couleur de fond personnalisée */
+ }
+.navbar-custom .navbar-brand,
+.navbar-custom .navbar-nav .nav-link {
+    color: #ffffff; /* Couleur des liens */
+}
+.navbar-custom .nav-item.active .nav-link,
+.navbar-custom .nav-item:hover .nav-link {
+    color: #ffdd00; /* Couleur des liens au survol ou actif */
+}
+
+.sidebar {
+    position: fixed; /* Fixée sur le côté */
+    top: 50px; /* Au-dessus de la fenêtre d'affichage */
+    left: 0; /* À gauche de la fenêtre d'affichage */
+    width: 200px; /* ou la largeur de votre sidebar */
+    height: calc(100vh - 50px); /* ajustez en fonction de la hauteur de la navbar */
+    overflow-x: hidden; /* Masquer le débordement horizontal */
+    overflow-y: auto; /* Défilement vertical si nécessaire */
+}
+
+.sidebar-sticky {
+    position: sticky;
+    top: 50px; /* Aligné en haut */
+}
+.custom-hover:hover {
+    background-color: #0056b3; /* A slightly lighter shade of the sidebar color for hover */
+    color: white;
+    text-decoration: none; /* Remove the underline from links */
+    border-radius: .25rem; /* Optional: adds rounded corners to the hover effect */
+}
+
+/* Ensure that the hover effect does not apply to the active link */
+.custom-hover.active, .custom-hover.active:hover {
+    background-color: #004080;
+    color: white;
+}
+
+
+

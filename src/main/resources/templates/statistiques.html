@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="UTF-8">
+  <title>Statistiques de l'Entreprise</title>
+  <!-- Inclure le lien vers Bootstrap CSS -->
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css">
+  <link rel="stylesheet" th:href="@{/css/style.css}" />
+  <style>
+    body {
+      background-color: #f4f7f6; /* Couleur de fond neutre */
+    }
+
+    .card {
+      transform: scale(1); /* Pour une interaction au survol */
+      transition: transform 0.3s ease;
+      border: none; /* Retire les bordures par défaut des cartes */
+      border-radius: 0.25rem; /* Légèrement arrondi pour une apparence moderne */
+    }
+
+    .card:hover {
+      transform: scale(1.03); /* Légère augmentation de taille au survol */
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Ombre subtile pour le relief */
+    }
+
+    /* Personnalisation des couleurs des cartes pour un look plus professionnel */
+    .card-body {
+      background-color: #2c3e50; /* Vert doux */
+    }
+
+    .card-body.bg-info {
+      background-color: #5bc0de; /* Bleu doux */
+    }
+
+    .card-body.bg-warning {
+      background-color: #2c3e50; /* Orange subtil, moins criard que le jaune */
+    }
+
+    .text-white {
+      transition: color 0.3s ease; /* Transition de couleur fluide pour le texte */
+    }
+
+    h1 {
+      color: #2c3e50; /* Bleu-gris foncé pour le titre */
+      margin-bottom: 2rem; /* Espacement plus grand après le titre principal */
+    }
+  </style>
+
+
+
+
+
+</head>
+<body>
+<div th:replace="navbar :: navbar"></div>
+<div class="container mt-5">
+  <h1 class="text-center">Statistiques de l'Entreprise</h1>
+
+  <!-- Affiche le nombre total d'employés -->
+  <div  class="card mt-4 animate__animated animate__bounceIn animate__delay-1s">
+    <div class="card-body ">
+      <h2 class="card-title text-white">Nombre Total d'Employés</h2>
+      <p class="card-text text-white">Le nombre total d'employés dans l'entreprise est : <span th:text="${nombreTotalEmployes}"></span></p>
+    </div>
+  </div>
+
+  <!-- Affiche le département avec le plus grand nombre d'employés -->
+  <div class="card mt-4 animate__animated animate__bounceIn animate__delay-2s">
+    <div class="card-body ">
+      <h2 class="card-title text-white">Département avec le Plus Grand Nombre d'Employés</h2>
+      <p class="card-text text-white">Le département avec le plus grand nombre d'employés est : <span th:text="${departementAvecPlusDEmployes.nomDept}"></span></p>
+    </div>
+  </div>
+
+  <!-- Affiche la masse salariale de l'entreprise -->
+  <div class="card mt-4 animate__animated animate__bounceIn animate__delay-3s">
+    <div class="card-body ">
+      <h2 class="card-title text-white">Masse Salariale de l'Entreprise</h2>
+      <p class="card-text text-white">La masse salariale de l'entreprise est : <span th:text="${masseSalarialeEntreprise}"></span></p>
+    </div>
+  </div>
+</div>
+
+<!-- Inclure Bootstrap JS -->
+<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.3/dist/umd/popper.min.js"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+</body>
+</html>

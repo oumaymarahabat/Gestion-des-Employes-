@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="UTF-8">
+  <title>Add Department</title>
+  <!-- Bootstrap CSS -->
+
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+  <link rel="stylesheet" th:href="@{/css/style.css}" />
+
+
+
+
+</head>
+
+<body>
+<div th:replace="navbar :: navbar"></div>
+<div class="container my-5">
+  <div class="row justify-content-center">
+    <div class="col-md-8">
+      <div class="card border-0 shadow-lg">
+        <div class="card-header" style="background-color: #004080; color: white;">
+          <h1 class="text-center mb-0">Ajouter Département</h1>
+        </div>
+        <div class="card-body p-4">
+          <form action="departements.html" th:action="@{/departements/add}" th:object="${departement}" method="post">
+            <div class="form-group">
+              <label for="idDept" class="font-weight-bold">Identifiant du département :</label>
+              <input type="text" class="form-control rounded-pill" id="idDept" name="idDept" th:value="*{idDept}" required />
+            </div>
+            <div class="form-group">
+              <label for="nomDept" class="font-weight-bold">Nom du département :</label>
+              <input type="text" class="form-control rounded-pill" id="nomDept" name="nomDept" th:value="*{nomDept}" required />
+            </div>
+            <div class="text-center mt-4">
+              <button type="submit" class="btn btn-lg btn-block rounded-pill" style="background-color: #004080; color: white;">Ajouter</button>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+
+<!-- Bootstrap Bundle with Popper -->
+<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.3/dist/umd/popper.min.js"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+</body>
+</html>
+

@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="UTF-8">
+  <title>Edit Employee</title>
+  <!-- Include Bootstrap CSS -->
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+  <link rel="stylesheet" th:href="@{/css/style.css}" />
+</head>
+<body>
+<div th:replace="navbar :: navbar"></div>
+<div class="container my-5">
+  <div class="row justify-content-center">
+    <div class="col-md-10 col-lg-8">
+      <div class="card border-0 shadow-lg">
+        <div class="card-header" style="background-color: #004080; color: white;">
+          <h2 class="card-title text-center mb-0">Modifier Employé</h2>
+        </div>
+        <div class="card-body p-5">
+          <form th:action="@{/employee/edit/{id}(id=${employee.idEmp})}" th:object="${employee}" method="post">
+            <input type="hidden" th:field="*{idEmp}" />
+
+            <div class="form-group">
+              <label for="nomEmp" class="font-weight-bold">Nom:</label>
+              <input type="text" id="nomEmp" th:field="*{nomEmp}" class="form-control rounded-pill" required />
+            </div>
+
+            <div class="form-group">
+              <label for="salaire" class="font-weight-bold">Salaire:</label>
+              <input type="number" id="salaire" th:field="*{salaire}" class="form-control rounded-pill" required />
+            </div>
+
+            <div class="form-group">
+              <label for="age" class="font-weight-bold">Age:</label>
+              <input type="number" id="age" th:field="*{age}" class="form-control rounded-pill" required />
+            </div>
+
+            <div class="form-group">
+              <label for="departement" class="font-weight-bold">Departement:</label>
+              <select id="departement" th:field="*{departement.idDept}" class="form-control rounded-pill" required>
+                <option value="" th:text="Selectionner"></option>
+                <option th:each="dept : ${departements}"
+                        th:value="${dept.idDept}"
+                        th:text="${dept.nomDept}">
+                </option>
+              </select>
+            </div>
+
+            <div class="text-center mt-4">
+              <button type="submit" class="btn btn-lg btn-block rounded-pill" style="background-color: #004080; color: white;">Modifier</button>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+<!-- Include Bootstrap JS and its dependencies -->
+<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.3/dist/umd/popper.min.js"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+</body>
+</html>

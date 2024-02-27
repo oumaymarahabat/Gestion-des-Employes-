@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="UTF-8">
+  <title>Department Details</title>
+  <!-- Bootstrap CSS -->
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+  <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" rel="stylesheet">
+  <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
+  <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
+
+  <link rel="stylesheet" th:href="@{/css/style.css}" />
+</head>
+<body>
+<div th:replace="navbar :: navbar"></div>
+<div class="container mt-3">
+  <h1>Department Details</h1>
+
+  <!-- Department Details -->
+  <div class="container my-5">
+    <div class="card shadow-lg border-0">
+      <div class="card-body">
+        <h2 class="card-title text-primary" th:text="${departement.nomDept}">Department Name</h2>
+        <p class="card-text font-weight-bold">ID: <span class="text-secondary" th:text="${departement.idDept}">123</span></p>
+        <p class="card-text">Le nombre total des employés : <span class="font-italic" th:text="${departementNombreEmployees}"></span></p>
+        <p class="card-text">La masse salariale du département est: <span class="font-italic" th:text="${departementMasseSalariael}"></span></p>
+
+        <!-- Enhanced button group for actions -->
+        <div class="btn-group mt-4" role="group" aria-label="Department Actions">
+          <button type="button" class="btn btn-outline-warning btn-lg" data-toggle="modal" data-target="#myModal">
+            <i class="fas fa-edit"></i> Modify
+          </button>
+          <button type="button" class="btn btn-outline-danger btn-lg"
+                  th:data-dept-id="${departement.idDept}"
+                  th:data-employee-count="${departementNombreEmployees}"
+                  onclick="confirmDelete(this.getAttribute('data-dept-id'), this.getAttribute('data-employee-count'))">
+            <i class="fas fa-trash-alt"></i> Delete
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- MessageBox-->
+  <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="myModalLabel">Edit Department</h5>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body">
+          <form th:action="@{/departements/edit/{id}(id=${departement.idDept})}" method="post">
+            <div class="form-group">
+              <label for="idDept">Department ID:</label>
+              <input type="text" id="idDept" name="idDept" th:value="${departement.idDept}" class="form-control" readonly/>
+            </div>
+            <div class="form-group">
+              <label for="nomDept">Department Name:</label>
+              <input type="text" id="nomDept" name="nomDept" th:value="${departement.nomDept}" class="form-control" />
+            </div>
+            <button type="submit" class="btn btn-primary">Modify</button>
+            <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Employees List -->
+  <div class="container mt-5">
+    <h2 class="mb-4 text-center">Employees</h2>
+    <div class="table-responsive">
+      <table class="table table-hover shadow-sm">
+        <thead class="thead-light">
+        <tr>
+          <th>ID</th>
+          <th>Name</th>
+          <th>Salary</th>
+          <th>Age</th>
+          <th>Action</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:each="employee : ${departement.employees}">
+          <td th:text="${employee.idEmp}">Employee ID</td>
+          <td th:text="${employee.nomEmp}">Employee Name</td>
+          <td th:text="${employee.salaire}">Salary</td>
+          <td th:text="${employee.age}">Age</td>
+          <td>
+            <button type="button" class="btn btn-outline-info btn-sm" data-toggle="modal" th:attr="data-target=${'#reassignModal-emp-' + employee.idEmp}">
+              <i class="fas fa-exchange-alt"></i> Réaffecter
+            </button>
+          </td>
+        </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+
+  <!-- Bootstrap JS and its dependencies -->
+
+<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.3/dist/umd/popper.min.js"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+<script>
+  function confirmDelete(deptId, employeeCount) {
+    var message = employeeCount > 0 ?
+            "Vous devez réaffecter tous les employés avant de pouvoir supprimer ce département." :
+            "Êtes-vous sûr de vouloir supprimer ce département ?";
+
+    if (employeeCount > 0) {
+      alert(message);
+    } else {
+      if (confirm(message)) {
+        window.location.href = '/departements/delete/' + deptId;
+      }
+    }
+  }
+</script>
+<!-- Modal for reaffecter -->
+<div th:each="employee : ${departement.employees}">
+  <div class="modal fade" th:id="${'reassignModal-emp-' + employee.idEmp}" tabindex="-1" role="dialog" aria-labelledby="reassignModalLabel-${employee.idEmp}" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="reassignModalLabel-${employee.idEmp}">Réaffecter Employé</h5>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body">
+          <form th:action="@{/departement/{id}/employees/reassign/{idEmp}(id=${employee.departement.idDept}, idEmp=${employee.idEmp})}" method="post">
+            <div class="form-group">
+              <label for="newDept-${employee.idEmp}">Nouveau Département:</label>
+              <select id="newDept-${employee.idEmp}" name="newDept" class="form-control">
+                <option th:each="dept : ${allDepartments}" th:value="${dept.idDept}" th:text="${dept.nomDept}" th:unless="${dept.idDept == employee.departement.idDept}"></option>
+              </select>
+            </div>
+            <button type="submit" class="btn btn-primary">Confirmer</button>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+</body>
+</html>
+
+
